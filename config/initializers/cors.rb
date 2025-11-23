@@ -19,6 +19,24 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       resource '/api/*', headers: :any, methods: :any, expose: %w[access-token client uid expiry]
     end
   end
+
+  # Widget cross-site cookie support
+  # Allows the widget to work from any domain with credentials (cookies)
+  allow do
+    origins do |origin, _env|
+      # Allow all origins for widget embedding
+      # This is safe because authentication is handled via pubsub_token, not cookies
+      true
+    end
+    resource '/public/*',
+             headers: :any,
+             methods: [:get, :post, :put, :patch, :delete, :options, :head],
+             credentials: true
+    resource '/api/v1/widget/*',
+             headers: :any,
+             methods: [:get, :post, :put, :patch, :delete, :options, :head],
+             credentials: true
+  end
 end
 
 ################################################

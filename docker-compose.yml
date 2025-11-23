@@ -31,6 +31,9 @@ x-base-config: &base-config
     - REDIS_URL=${REDIS_URL}
     - ENABLE_ACCOUNT_SIGNUP=${ENABLE_ACCOUNT_SIGNUP}
     - ACTIVE_STORAGE_SERVICE=${ACTIVE_STORAGE_SERVICE}
+    # Cookie cross-site configuration
+    - COOKIE_SAME_SITE=${COOKIE_SAME_SITE:-None}
+    - FORCE_SSL=${FORCE_SSL:-true}
 
 services:
   chatwoot-rails:
