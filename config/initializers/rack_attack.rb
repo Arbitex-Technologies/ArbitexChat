@@ -243,6 +243,9 @@ ActiveSupport::Notifications.subscribe('throttle.rack_attack') do |_name, _start
     "method: \"#{req.request_method}\", " \
     "user_agent: \"#{req.user_agent}\""
   )
+
+  Rack::Attack.safelist('allow all for development') { |req| true }
+  
 end
 
 Rack::Attack.enabled = Rails.env.production? ? ActiveModel::Type::Boolean.new.cast(ENV.fetch('ENABLE_RACK_ATTACK', true)) : false
